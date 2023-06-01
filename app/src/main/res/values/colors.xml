@@ -11,4 +11,6 @@
     <color name="colorPrimaryDark">#151515</color>
     <color name="colorAccent">#3D3E40</color>
     <color name="colorBackground">#EBE4DC</color>
+    <color name="colorLightIphone">#F6F6F6</color>
+    <color name="colorWhiteIphone">#FFFFFF</color>
 </resources>

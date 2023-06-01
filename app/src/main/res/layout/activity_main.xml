@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FCFDFF"
     tools:context=".MainActivity">
 
 
@@ -12,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#6FCAC8C6"
+        android:background="#FCFDFF"
         android:orientation="horizontal">
 
         <EditText
@@ -35,7 +36,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@drawable/round_button"
-            android:backgroundTint="#26A69A"
+            android:backgroundTint="@color/colorPrimary"
             android:text="Send"
             android:textColor="@android:color/white" />
 
