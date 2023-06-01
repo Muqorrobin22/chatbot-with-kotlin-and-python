@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FCFDFF"
-    tools:context=".MainActivity">
+    android:background="@color/colorLightIphone"
+    tools:context=".ui.MainActivity">
 
 
     <LinearLayout
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#FCFDFF"
+        android:background="@color/colorLightIphone"
         android:orientation="horizontal">
 
         <EditText
@@ -54,7 +54,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="#6FCAC8C6"
+        android:background="@color/colorLightIphone"
         android:id="@+id/dark_divider"/>
 
 
