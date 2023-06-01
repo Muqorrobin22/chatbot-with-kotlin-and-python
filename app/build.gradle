@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.chaquo.python'
 }
 
 android {
@@ -14,7 +15,21 @@ android {
         versionCode 1
         versionName "1.0"
 
+        // Python
+        python {
+            pip {
+                install "nltk"
+                install "Sastrawi"
+            }
+        }
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        main {
+            python.srcDir "src/main/python"
+        }
     }
 
     buildTypes {
