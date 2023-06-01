@@ -15,13 +15,20 @@ android {
         versionCode 1
         versionName "1.0"
 
-        // Python
+        // Python ------------------
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+
         python {
             pip {
                 install "nltk"
                 install "Sastrawi"
             }
         }
+
+        // ----------------------
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
