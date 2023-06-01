@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chaquo.python.Python
@@ -15,13 +14,10 @@ import com.example.chatbot_app_pa.utils.BotResponse
 import com.example.chatbot_app_pa.utils.Constant.RECEIVE_ID
 import com.example.chatbot_app_pa.utils.Constant.SEND_ID
 import kotlinx.coroutines.*
-import java.sql.Time
-import java.time.LocalDateTime
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: MessageAdapter
-    private val botList = listOf("Peter", "Ahmed", "Mohammed", "Fransisca")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
