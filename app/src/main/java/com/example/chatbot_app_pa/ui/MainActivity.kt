@@ -7,6 +7,8 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.chaquo.python.Python
+import com.chaquo.python.android.AndroidPlatform
 import com.example.chatbot_app_pa.R
 import com.example.chatbot_app_pa.data.Message
 import com.example.chatbot_app_pa.utils.BotResponse
@@ -27,7 +29,9 @@ class MainActivity : AppCompatActivity() {
         recyclerView()
 
         clickEvents()
-        welcomeChatbot()
+
+        customMessage(welcomeWordPython())
+
     }
 
     fun clickEvents() {
@@ -49,12 +53,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun welcomeChatbot() {
-        val random = (0..3).random()
-        customMessage("Hello! Today You're speaking with ${botList[random]}, " +
-                "Technically I'm bot so that name is just for fun. \n\n How may I help you?"
-        )
-    }
 
     private fun customMessage(message: String) {
         GlobalScope.launch {
@@ -116,6 +114,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    // Python
+    private fun initPython() {
+        if (! Python.isStarted()) {
+            Python.start( AndroidPlatform(this));
+        }
+    }
+
+    private fun welcomeWordPython(): String {
+        val pythonInstance =Python.getInstance()
+        val pythonFiles = pythonInstance.getModule("welcomeWord")
+        return pythonFiles.callAttr("welcome").toString()
     }
 
 }
