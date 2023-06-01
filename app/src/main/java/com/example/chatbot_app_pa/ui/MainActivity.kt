@@ -13,11 +13,19 @@ import com.example.chatbot_app_pa.data.Message
 import com.example.chatbot_app_pa.utils.BotResponse
 import com.example.chatbot_app_pa.utils.Constant.RECEIVE_ID
 import com.example.chatbot_app_pa.utils.Constant.SEND_ID
+import com.example.cobaktor.remote.DiseaseService
+import io.ktor.client.*
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: MessageAdapter
+
+    // Ktor
+    private val service = DiseaseService.create()
+    private val client = HttpClient {}
+    val inferredDisease = listOf<String>("batuk", "pilek", "coba", "panas")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         clickEvents()
 
         customMessage(welcomeWordPython())
+
+        makeRequestDiseaseCount(inferredDisease)
 
     }
 
@@ -123,6 +133,21 @@ class MainActivity : AppCompatActivity() {
         val pythonInstance =Python.getInstance()
         val pythonFiles = pythonInstance.getModule("welcomeWord")
         return pythonFiles.callAttr("welcome").toString()
+    }
+
+    // Ktor
+    private fun makeRequestDiseaseCount(diseases : List<String>) {
+
+        for (disease in diseases) {
+            GlobalScope.launch(Dispatchers.Main) {
+                service.getDisease(disease)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        client.close()
     }
 
 }
