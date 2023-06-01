@@ -1,0 +1,2 @@
+stop_word_list_datasets = ['dengan', 'ia', 'bahwa', 'oleh', 'saya', 'merasa', 'apa', 'jangan',
+                           'bagian', 'mengalami', 'gimana', 'dong', 'bagaimana', 'gejala', 'merasa', 'merada', 'disertai']
