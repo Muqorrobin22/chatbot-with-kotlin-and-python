@@ -22,9 +22,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: MessageAdapter
 
     // Ktor
-    private val service = DiseaseService.create()
+//    private val service = DiseaseService.create()
     private val client = HttpClient {}
-    val inferredDisease = listOf<String>("batuk", "pilek", "coba", "panas")
+//    val inferredDisease = listOf<String>("batuk", "pilek", "coba", "panas")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         customMessage(welcomeWordPython())
 
-        makeRequestDiseaseCount(inferredDisease)
+//        makeRequestDiseaseCount(inferredDisease)
 
     }
 
@@ -136,14 +136,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Ktor
-    private fun makeRequestDiseaseCount(diseases : List<String>) {
 
-        for (disease in diseases) {
-            GlobalScope.launch(Dispatchers.Main) {
-                service.getDisease(disease)
-            }
-        }
-    }
 
     override fun onDestroy() {
         super.onDestroy()

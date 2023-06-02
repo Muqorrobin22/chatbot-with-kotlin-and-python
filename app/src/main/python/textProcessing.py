@@ -42,11 +42,11 @@ def textProcessing(input_keluhan):
     omit_word = omit_merge_word(string_to_list)
     merge_word = merge_some_word_in_list(string_to_list)
     merged_all_word = merge_all_word_to_one_list(omit_word, merge_word)
-
+    return merged_all_word
     # list to dictionaries
-    dict_word = {x : True for x in merged_all_word}
-
+    # dict_word = {x : True for x in merged_all_word}
+    # return dict_word
     # Forward chaining with new datasets bobot
-    hasil2 = forward_chaining2(dict_word, aturan)
-
-    return hasil2
+    # hasil2 = forward_chaining2(dict_word, aturan)
+    #
+    # return hasil2
