@@ -16,16 +16,21 @@ object BotResponse {
         val message = _message.lowercase()
 
         // The Bot Response from Python AI ( Sistem Pakar )
-        val responseBot = textProcessingPython(message)
+        try {
+            val responseBot = textProcessingPython(message)
 
-        var removeBracket = responseBot.replace("[", "").replace("]", "").replace("'", "").replace(", ", ",")
+            var removeBracket = responseBot.replace("[", "").replace("]", "").replace("'", "").replace(", ", ",")
 
-        var stringToList = removeBracket.split(",").toList()
+            var stringToList = removeBracket.split(",").toList()
 
 
-        Request.makeRequestDiseaseCount(stringToList)
+            Request.makeRequestDiseaseCount(stringToList)
 
-        return removeBracket
+            return removeBracket
+
+        } catch (e: Exception) {
+            return "Oopss.. Maaf terjadi kesalahan saat membaca gejala :(\n\nMohon masukkan ulang gejala"
+        }
 
     }
 }

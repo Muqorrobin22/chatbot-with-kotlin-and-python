@@ -42,7 +42,11 @@ def textProcessing(input_keluhan):
     omit_word = omit_merge_word(string_to_list)
     merge_word = merge_some_word_in_list(string_to_list)
     merged_all_word = merge_all_word_to_one_list(omit_word, merge_word)
-    return merged_all_word
+
+    try:
+        return merged_all_word
+    except:
+        return "Oopss.. Maaf terjadi kesalahan saat membaca gejala :(\n\nMohon masukkan ulang gejala"
     # list to dictionaries
     # dict_word = {x : True for x in merged_all_word}
     # return dict_word
