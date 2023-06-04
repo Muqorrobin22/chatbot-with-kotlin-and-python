@@ -2,6 +2,7 @@ package com.example.chatbot_app_pa.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,10 @@ import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.example.chatbot_app_pa.R
 import com.example.chatbot_app_pa.data.Message
+import com.example.chatbot_app_pa.remote.Request
+import com.example.chatbot_app_pa.retrofit.DiseaseApiService
+import com.example.chatbot_app_pa.retrofit.dto.Disease
+import com.example.chatbot_app_pa.retrofit.retrofit
 import com.example.chatbot_app_pa.utils.BotResponse
 import com.example.chatbot_app_pa.utils.Constant.RECEIVE_ID
 import com.example.chatbot_app_pa.utils.Constant.SEND_ID
@@ -25,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 //    private val service = DiseaseService.create()
     private val client = HttpClient {}
 //    val inferredDisease = listOf<String>("batuk", "pilek", "coba", "panas")
+    val apiService = retrofit.create(DiseaseApiService::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +45,27 @@ class MainActivity : AppCompatActivity() {
         // remove the action bar
         // supportActionBar?.hide()
 //        makeRequestDiseaseCount(inferredDisease)
+        getRequestDisease()
+    }
 
+    fun getRequestDisease() {
+
+        val diseaseContainer = mutableListOf<Disease>()
+
+        GlobalScope.launch(Dispatchers.Main) {
+
+                val responses = withContext(Dispatchers.IO) {
+                    apiService.getDiseases("batuk")
+                }
+
+                for (response in responses) {
+                    diseaseContainer.add(response)
+                    customMessage(diseaseContainer.toString())
+
+                    Log.v("Datanya dinamis: ", response.toString())
+                }
+
+        }
     }
 
     fun clickEvents() {
