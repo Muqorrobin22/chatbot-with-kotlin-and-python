@@ -13,11 +13,14 @@ import com.example.chatbot_app_pa.R
 import com.example.chatbot_app_pa.data.Message
 import com.example.chatbot_app_pa.remote.Request
 import com.example.chatbot_app_pa.retrofit.DiseaseApiService
+import com.example.chatbot_app_pa.retrofit.DiseaseImplement.apiService
+import com.example.chatbot_app_pa.retrofit.DiseaseImplement.diseaseContainer
 import com.example.chatbot_app_pa.retrofit.dto.Disease
 import com.example.chatbot_app_pa.retrofit.retrofit
 import com.example.chatbot_app_pa.utils.BotResponse
 import com.example.chatbot_app_pa.utils.Constant.RECEIVE_ID
 import com.example.chatbot_app_pa.utils.Constant.SEND_ID
+import com.example.chatbot_app_pa.utils.textProcessingPython
 import com.example.cobaktor.remote.DiseaseService
 import io.ktor.client.*
 import kotlinx.coroutines.*
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 //    private val service = DiseaseService.create()
     private val client = HttpClient {}
 //    val inferredDisease = listOf<String>("batuk", "pilek", "coba", "panas")
-    val apiService = retrofit.create(DiseaseApiService::class.java)
+//    val apiService = retrofit.create(DiseaseApiService::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         // remove the action bar
         // supportActionBar?.hide()
 //        makeRequestDiseaseCount(inferredDisease)
-        getRequestDisease()
+//        getRequestDisease()
     }
 
     fun getRequestDisease() {
@@ -58,11 +61,13 @@ class MainActivity : AppCompatActivity() {
                     apiService.getDiseases("batuk")
                 }
 
+
+
                 for (response in responses) {
                     diseaseContainer.add(response)
                     customMessage(diseaseContainer.toString())
 
-                    Log.v("Datanya dinamis: ", response.toString())
+                    Log.v("Datanya dinamis(main): ", response.toString())
                 }
 
         }
@@ -128,7 +133,7 @@ class MainActivity : AppCompatActivity() {
             delay(1000)
             withContext(Dispatchers.Main) {
 
-                val response = BotResponse.basicResponses(message)
+                val response = baseResponseBot(message)
                 adapter.insertMessage(Message(response, RECEIVE_ID, timeStamp))
 
                 findViewById<RecyclerView>(R.id.rv_messages).scrollToPosition(adapter.itemCount - 1)
@@ -136,6 +141,31 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun textProcessingPython(messageFromKotlin: String): String {
+        val python = Python.getInstance()
+        val pythonFiles = python.getModule("textProcessing")
+        return pythonFiles.callAttr("textProcessing", messageFromKotlin).toString()
+    }
+
+    fun baseResponseBot(_message: String): String {
+        val message = _message.lowercase()
+
+        try {
+            val responseBot = textProcessingPython(message)
+
+            var removeBracket = responseBot.replace("[", "").replace("]", "").replace("'", "").replace(", ", ",")
+//
+            var stringToList = removeBracket.split(",").toList()
+
+            getRequestDisease()
+
+            return diseaseContainer.toString()
+
+        } catch (e: Exception) {
+            return "Oopss.. Maaf terjadi kesalahan saat membaca gejala :(\n\nMohon masukkan ulang gejala"
+        }
     }
 
     override fun onStart() {
