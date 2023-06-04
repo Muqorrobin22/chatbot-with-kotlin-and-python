@@ -16,6 +16,7 @@ object BotResponse {
         val message = _message.lowercase()
 
         // The Bot Response from Python AI ( Sistem Pakar )
+        
         try {
             val responseBot = textProcessingPython(message)
 

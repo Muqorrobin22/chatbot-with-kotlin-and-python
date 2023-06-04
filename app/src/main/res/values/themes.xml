@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/colorLightIphone</item>
         <item name="colorOnSecondary">@color/colorBackground</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/colorLightIphone</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

@@ -36,6 +36,8 @@ class MainActivity : AppCompatActivity() {
 
         customMessage(welcomeWordPython())
 
+        // remove the action bar
+        // supportActionBar?.hide()
 //        makeRequestDiseaseCount(inferredDisease)
 
     }
