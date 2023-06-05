@@ -56,40 +56,43 @@ class MainActivity : AppCompatActivity() {
 
         var diseaseContainer = mutableListOf<Disease>()
 
-        try {
+
             GlobalScope.launch(Dispatchers.Main) {
-                for (url in path) {
-                    val responses = withContext(Dispatchers.IO) {
-                        apiService.getDiseases(url)
+                try {
+                    for (url in path) {
+                        val responses = withContext(Dispatchers.IO) {
+                            apiService.getDiseases(url)
+                        }
+                        diseaseContainer.addAll(responses)
                     }
-                    diseaseContainer.addAll(responses)
+
+                    var messageTotal = calculateTotal(diseaseContainer)
+
+                    var getDiseaseNameByMaxWeight = getDiseaseWithMaxTotal(messageTotal)
+
+                    getInferredDisease = getDiseaseNameByMaxWeight
+
+                    Log.v("Datanya dinamis(main): ", path.toString())
+                    Log.v("Data Total: ", diseaseContainer.toString())
+                    Log.v("Nama Penyakit: ", getDiseaseNameByMaxWeight.toString())
+                    Log.v("Get Inferred Disease", getInferredDisease)
+
+                    val responses =  apiService.getBotResponse(getDiseaseNameByMaxWeight)
+
+                    Log.v("Inferred Disease beb ", responses.toString())
+
+                    val finalResponse = getOutputBot(responses)
+
+                    customMessage(finalResponse)
+
+                    Log.v("Final Response ", finalResponse)
+                }
+                catch (e: Exception) {
+                    customMessage("Maaf Terjadi Kesalahan saat mengambil data.\n\nTunggu Beberapa Saat atau Cek Internet Kamu\n\nTerima Kasih")
                 }
 
-                var messageTotal = calculateTotal(diseaseContainer)
-
-                var getDiseaseNameByMaxWeight = getDiseaseWithMaxTotal(messageTotal)
-
-                getInferredDisease = getDiseaseNameByMaxWeight
-
-                Log.v("Datanya dinamis(main): ", path.toString())
-                Log.v("Data Total: ", diseaseContainer.toString())
-                Log.v("Nama Penyakit: ", getDiseaseNameByMaxWeight.toString())
-                Log.v("Get Inferred Disease", getInferredDisease)
-
-                val responses =  apiService.getBotResponse(getDiseaseNameByMaxWeight)
-
-                Log.v("Inferred Disease beb ", responses.toString())
-
-                val finalResponse = getOutputBot(responses)
-
-                customMessage(finalResponse)
-
-                Log.v("Final Response ", finalResponse)
-
             }
-        } catch (e: Exception) {
-            customMessage("Maaf Terjadi Kesalahan saat mengambil data.\n\nTunggu Beberapa Saat atau Cek Internet Kamu\n\nTerima Kasih")
-        }
+
 
     }
 
