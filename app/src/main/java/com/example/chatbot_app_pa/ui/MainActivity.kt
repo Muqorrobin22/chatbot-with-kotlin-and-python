@@ -1,10 +1,12 @@
 package com.example.chatbot_app_pa.ui
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chaquo.python.Python
@@ -13,8 +15,8 @@ import com.example.chatbot_app_pa.R
 import com.example.chatbot_app_pa.data.Message
 import com.example.chatbot_app_pa.remote.Request
 import com.example.chatbot_app_pa.retrofit.DiseaseApiService
-import com.example.chatbot_app_pa.retrofit.DiseaseImplement.apiService
-import com.example.chatbot_app_pa.retrofit.DiseaseImplement.diseaseContainer
+//import com.example.chatbot_app_pa.retrofit.bot
+import com.example.chatbot_app_pa.retrofit.dto.BotResponseDto
 import com.example.chatbot_app_pa.retrofit.dto.Disease
 import com.example.chatbot_app_pa.retrofit.retrofit
 import com.example.chatbot_app_pa.utils.BotResponse
@@ -34,6 +36,9 @@ class MainActivity : AppCompatActivity() {
     private val client = HttpClient {}
 //    val inferredDisease = listOf<String>("batuk", "pilek", "coba", "panas")
 //    val apiService = retrofit.create(DiseaseApiService::class.java)
+    val apiService = retrofit.create(DiseaseApiService::class.java)
+//    val botService = bot.create(BotApiService::class.java)
+    var getInferredDisease = String()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,33 +50,48 @@ class MainActivity : AppCompatActivity() {
 
         customMessage(welcomeWordPython())
 
-        // remove the action bar
-        // supportActionBar?.hide()
-//        makeRequestDiseaseCount(inferredDisease)
-//        getRequestDisease()
     }
 
-    fun getRequestDisease() {
+    fun getRequestDisease(path: List<String>) {
 
-        val diseaseContainer = mutableListOf<Disease>()
+        var diseaseContainer = mutableListOf<Disease>()
 
-        GlobalScope.launch(Dispatchers.Main) {
-
-                val responses = withContext(Dispatchers.IO) {
-                    apiService.getDiseases("batuk")
+            GlobalScope.launch(Dispatchers.Main) {
+                for (url in path) {
+                    val responses = withContext(Dispatchers.IO) {
+                        apiService.getDiseases(url)
+                    }
+                    diseaseContainer.addAll(responses)
                 }
 
+                var messageTotal = calculateTotal(diseaseContainer)
+                var getDiseaseNameByMaxWeight = getDiseaseWithMaxTotal(messageTotal)
+                getInferredDisease = getDiseaseNameByMaxWeight.toString()
+                customMessage(diseaseContainer.toString())
+                customMessage(messageTotal.toString())
+                customMessage(getDiseaseNameByMaxWeight.toString())
+                Log.v("Datanya dinamis(main): ", path.toString())
+                Log.v("Data Total: ", diseaseContainer.toString())
+                Log.v("Nama Penyakit: ", getDiseaseNameByMaxWeight.toString())
+                Log.v("Get Inferred Disease", getInferredDisease)
 
+                val responses =  apiService.getBotResponse(getDiseaseNameByMaxWeight.toString())
 
-                for (response in responses) {
-                    diseaseContainer.add(response)
-                    customMessage(diseaseContainer.toString())
+                Log.v("Inferred Disease beb ", responses.toString())
 
-                    Log.v("Datanya dinamis(main): ", response.toString())
-                }
+                customMessage(responses.toString())
+
+                val finalResponse = getOutputBot(responses)
+
+                customMessage(finalResponse)
+
+                Log.v("Final Response ", finalResponse)
 
         }
     }
+
+
+
 
     fun clickEvents() {
         val sendButton = findViewById<Button>(R.id.btn_send)
@@ -149,6 +169,7 @@ class MainActivity : AppCompatActivity() {
         return pythonFiles.callAttr("textProcessing", messageFromKotlin).toString()
     }
 
+
     fun baseResponseBot(_message: String): String {
         val message = _message.lowercase()
 
@@ -159,13 +180,35 @@ class MainActivity : AppCompatActivity() {
 //
             var stringToList = removeBracket.split(",").toList()
 
-            getRequestDisease()
+            getRequestDisease(stringToList)
+//            getRequestBotResponse(getInferredDisease)
+//            Log.v("diseaseValue: ", getRequestDisease(stringToList).toString())
+//            var result = calculateTotal(diseaseContainer)
+//            Log.v("diseaseContainer ", diseaseContainer.toString())
+//            Log.v("Setelah dikalkulasi", result.toString())
 
-            return diseaseContainer.toString()
+            return "coba"
 
         } catch (e: Exception) {
             return "Oopss.. Maaf terjadi kesalahan saat membaca gejala :(\n\nMohon masukkan ulang gejala"
         }
+    }
+
+
+    fun calculateTotal(data: MutableList<Disease>): Map<String, Int> {
+        Log.v("dalam CalculateTotal: ", data.toString())
+        return data.groupingBy { it.disease_name }
+            .aggregate { _, accumulator: Int?, element, _ ->
+                accumulator?.plus(element.value_weight) ?: element.value_weight
+            }
+    }
+
+    fun getDiseaseWithMaxTotal(data: Map<String, Int>): String? {
+        return data.maxByOrNull { it.value }?.key
+    }
+
+    fun getOutputBot(response: MutableList<BotResponseDto>) : String {
+        return response.getOrNull(0)?.output_bot.toString()
     }
 
     override fun onStart() {
