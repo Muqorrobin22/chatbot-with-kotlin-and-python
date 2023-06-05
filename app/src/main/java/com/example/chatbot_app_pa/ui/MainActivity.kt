@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         var diseaseContainer = mutableListOf<Disease>()
 
+        try {
             GlobalScope.launch(Dispatchers.Main) {
                 for (url in path) {
                     val responses = withContext(Dispatchers.IO) {
@@ -65,21 +66,19 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 var messageTotal = calculateTotal(diseaseContainer)
+
                 var getDiseaseNameByMaxWeight = getDiseaseWithMaxTotal(messageTotal)
-                getInferredDisease = getDiseaseNameByMaxWeight.toString()
-                customMessage(diseaseContainer.toString())
-                customMessage(messageTotal.toString())
-                customMessage(getDiseaseNameByMaxWeight.toString())
+
+                getInferredDisease = getDiseaseNameByMaxWeight
+
                 Log.v("Datanya dinamis(main): ", path.toString())
                 Log.v("Data Total: ", diseaseContainer.toString())
                 Log.v("Nama Penyakit: ", getDiseaseNameByMaxWeight.toString())
                 Log.v("Get Inferred Disease", getInferredDisease)
 
-                val responses =  apiService.getBotResponse(getDiseaseNameByMaxWeight.toString())
+                val responses =  apiService.getBotResponse(getDiseaseNameByMaxWeight)
 
                 Log.v("Inferred Disease beb ", responses.toString())
-
-                customMessage(responses.toString())
 
                 val finalResponse = getOutputBot(responses)
 
@@ -87,7 +86,11 @@ class MainActivity : AppCompatActivity() {
 
                 Log.v("Final Response ", finalResponse)
 
+            }
+        } catch (e: Exception) {
+            customMessage("Maaf Terjadi Kesalahan saat mengambil data.\n\nTunggu Beberapa Saat atau Cek Internet Kamu\n\nTerima Kasih")
         }
+
     }
 
 
@@ -154,9 +157,10 @@ class MainActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
 
                 val response = baseResponseBot(message)
-                adapter.insertMessage(Message(response, RECEIVE_ID, timeStamp))
-
-                findViewById<RecyclerView>(R.id.rv_messages).scrollToPosition(adapter.itemCount - 1)
+                if(response.isNotEmpty()) {
+                    adapter.insertMessage(Message(response, RECEIVE_ID, timeStamp))
+                    findViewById<RecyclerView>(R.id.rv_messages).scrollToPosition(adapter.itemCount - 1)
+                }
 
             }
         }
@@ -180,14 +184,10 @@ class MainActivity : AppCompatActivity() {
 //
             var stringToList = removeBracket.split(",").toList()
 
-            getRequestDisease(stringToList)
-//            getRequestBotResponse(getInferredDisease)
-//            Log.v("diseaseValue: ", getRequestDisease(stringToList).toString())
-//            var result = calculateTotal(diseaseContainer)
-//            Log.v("diseaseContainer ", diseaseContainer.toString())
-//            Log.v("Setelah dikalkulasi", result.toString())
 
-            return "coba"
+            getRequestDisease(stringToList)
+
+            return ""
 
         } catch (e: Exception) {
             return "Oopss.. Maaf terjadi kesalahan saat membaca gejala :(\n\nMohon masukkan ulang gejala"
@@ -203,8 +203,21 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun getDiseaseWithMaxTotal(data: Map<String, Int>): String? {
-        return data.maxByOrNull { it.value }?.key
+    fun getDiseaseWithMaxTotal(data: Map<String, Int>): String {
+        Log.v("MaxTotal", data.toString())
+
+        if (data.isEmpty()) {
+            return "Unknown"
+        }
+
+        val maxData = data.maxBy { it.value }.value
+        val diseaseData = data.maxBy { it.value }.key
+
+        return if (maxData >= 50) {
+            diseaseData
+        } else {
+            "bobot_kurang"
+        }
     }
 
     fun getOutputBot(response: MutableList<BotResponseDto>) : String {
