@@ -10,7 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Url
 
-private const val BASE_URL_DISEASE_DYNAMIC_USING_IPHONE = "http://172.20.10.3:3000/"
+private const val BASE_URL_DISEASE_DYNAMIC_USING_IPHONE = "https://oyster-app-o3ffp.ondigitalocean.app/"
 
 //private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
