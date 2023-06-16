@@ -23,5 +23,9 @@ class MenuActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+//        if (supportActionBar != null) {
+//            supportActionBar!!.hide()
+//        }
+
     }
 }
