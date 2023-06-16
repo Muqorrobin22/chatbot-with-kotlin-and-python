@@ -8,6 +8,10 @@ android {
     namespace 'com.example.chatbot_app_pa'
     compileSdk 33
 
+    buildFeatures {
+        dataBinding true
+    }
+
     defaultConfig {
         applicationId "com.example.chatbot_app_pa"
         minSdk 21

@@ -13,6 +13,7 @@ import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.example.chatbot_app_pa.R
 import com.example.chatbot_app_pa.data.Message
+import com.example.chatbot_app_pa.databinding.ActivityMainBinding
 import com.example.chatbot_app_pa.remote.Request
 import com.example.chatbot_app_pa.retrofit.DiseaseApiService
 //import com.example.chatbot_app_pa.retrofit.bot
@@ -42,7 +43,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         recyclerView()
 
@@ -55,7 +58,6 @@ class MainActivity : AppCompatActivity() {
     fun getRequestDisease(path: List<String>) {
 
         var diseaseContainer = mutableListOf<Disease>()
-
 
             GlobalScope.launch(Dispatchers.Main) {
                 try {
