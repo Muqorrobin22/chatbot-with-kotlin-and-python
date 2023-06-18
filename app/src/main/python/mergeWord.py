@@ -38,4 +38,10 @@ def omit_merge_word(list_some_word):
 
 def merge_all_word_to_one_list(list1, list2):
     merged_list = list1 + list2
-    return merged_list
+    result = []
+
+    for item in merged_list:
+        if item not in result:
+            result.append(item)
+
+    return result
