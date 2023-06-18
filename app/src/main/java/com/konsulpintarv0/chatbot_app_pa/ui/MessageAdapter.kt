@@ -1,14 +1,14 @@
-package com.example.chatbot_app_pa.ui
+package com.konsulpintarv0.chatbot_app_pa.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.chatbot_app_pa.R
-import com.example.chatbot_app_pa.data.Message
-import com.example.chatbot_app_pa.utils.Constant.RECEIVE_ID
-import com.example.chatbot_app_pa.utils.Constant.SEND_ID
+import com.konsulpintarv0.chatbot_app_pa.R
+import com.konsulpintarv0.chatbot_app_pa.data.Message
+import com.konsulpintarv0.chatbot_app_pa.utils.Constant.RECEIVE_ID
+import com.konsulpintarv0.chatbot_app_pa.utils.Constant.SEND_ID
 
 class MessageAdapter: RecyclerView.Adapter<MessageAdapter.MessageViewHolder>() {
 

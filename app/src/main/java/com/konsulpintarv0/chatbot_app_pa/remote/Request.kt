@@ -1,8 +1,6 @@
-package com.example.chatbot_app_pa.remote
+package com.konsulpintarv0.chatbot_app_pa.remote
 
-import android.util.Log
-import android.widget.TextView
-import com.example.cobaktor.remote.DiseaseService
+import com.konsulpintarv0.cobaktor.remote.DiseaseService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

@@ -1,14 +1,12 @@
-package com.example.chatbot_app_pa.retrofit
+package com.konsulpintarv0.chatbot_app_pa.retrofit
 
-import com.example.chatbot_app_pa.retrofit.dto.BotResponseDto
-import com.example.chatbot_app_pa.retrofit.dto.Disease
-import com.squareup.moshi.Moshi
+import com.konsulpintarv0.chatbot_app_pa.retrofit.dto.BotResponseDto
+import com.konsulpintarv0.chatbot_app_pa.retrofit.dto.Disease
 //import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Url
 
 private const val BASE_URL_DISEASE_DYNAMIC_USING_IPHONE = "https://oyster-app-o3ffp.ondigitalocean.app/"
 

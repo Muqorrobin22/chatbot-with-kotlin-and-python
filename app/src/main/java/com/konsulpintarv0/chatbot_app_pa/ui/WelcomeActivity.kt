@@ -1,11 +1,11 @@
-package com.example.chatbot_app_pa.ui
+package com.konsulpintarv0.chatbot_app_pa.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.example.chatbot_app_pa.R
-import com.example.chatbot_app_pa.databinding.ActivityWelcomeBinding
+import com.konsulpintarv0.chatbot_app_pa.R
+import com.konsulpintarv0.chatbot_app_pa.databinding.ActivityWelcomeBinding
 
 class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.example.cobaktor.remote
+package com.konsulpintarv0.cobaktor.remote
 
 object HttpRoute {
 

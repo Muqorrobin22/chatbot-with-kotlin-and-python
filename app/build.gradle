@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.chatbot_app_pa'
+    namespace 'com.konsulpintarv0.chatbot_app_pa'
     compileSdk 33
 
     buildFeatures {
@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.chatbot_app_pa"
+        applicationId "com.konsulpintarv0.chatbot_app_pa"
         minSdk 21
         targetSdk 33
         versionCode 1

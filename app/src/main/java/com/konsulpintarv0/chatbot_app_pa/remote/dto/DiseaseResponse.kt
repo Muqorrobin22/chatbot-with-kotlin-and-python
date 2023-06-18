@@ -1,4 +1,4 @@
-package com.example.chatbot_app_pa.remote.dto
+package com.konsulpintarv0.chatbot_app_pa.remote.dto
 import kotlinx.serialization.Serializable
 
 @Serializable

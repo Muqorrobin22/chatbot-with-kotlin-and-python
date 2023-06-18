@@ -1,4 +1,4 @@
-package com.example.chatbot_app_pa
+package com.konsulpintarv0.chatbot_app_pa
 
 import org.junit.Test
 

@@ -1,13 +1,4 @@
-package com.example.chatbot_app_pa.retrofit
-
-import android.util.Log
-import com.example.chatbot_app_pa.retrofit.dto.Disease
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.math.log
-
+package com.konsulpintarv0.chatbot_app_pa.retrofit
 
 
 object DiseaseImplement {

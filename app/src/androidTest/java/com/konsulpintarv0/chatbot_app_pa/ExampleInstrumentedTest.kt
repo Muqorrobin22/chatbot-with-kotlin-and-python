@@ -1,4 +1,4 @@
-package com.example.chatbot_app_pa
+package com.konsulpintarv0.chatbot_app_pa
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

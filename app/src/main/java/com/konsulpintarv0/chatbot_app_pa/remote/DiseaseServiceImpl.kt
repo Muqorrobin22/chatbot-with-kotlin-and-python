@@ -1,11 +1,10 @@
-package com.example.cobaktor.remote
+package com.konsulpintarv0.cobaktor.remote
 
-import com.example.chatbot_app_pa.remote.dto.DiseaseResponse
+import com.konsulpintarv0.chatbot_app_pa.remote.dto.DiseaseResponse
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
 
 class DiseaseServiceImpl(
     private val client : HttpClient

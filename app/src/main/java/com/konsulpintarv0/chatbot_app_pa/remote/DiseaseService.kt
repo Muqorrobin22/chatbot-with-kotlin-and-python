@@ -1,6 +1,6 @@
-package com.example.cobaktor.remote
+package com.konsulpintarv0.cobaktor.remote
 
-import com.example.chatbot_app_pa.remote.dto.DiseaseResponse
+import com.konsulpintarv0.chatbot_app_pa.remote.dto.DiseaseResponse
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.plugins.contentnegotiation.*

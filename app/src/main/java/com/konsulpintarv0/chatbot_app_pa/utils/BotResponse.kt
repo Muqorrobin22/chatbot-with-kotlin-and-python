@@ -1,9 +1,6 @@
-package com.example.chatbot_app_pa.utils
+package com.konsulpintarv0.chatbot_app_pa.utils
 
-import android.util.Log
 import com.chaquo.python.Python
-import com.example.chatbot_app_pa.remote.Request
-import com.example.chatbot_app_pa.retrofit.DiseaseImplement
 
 // Python Text Processing
 fun textProcessingPython(messageFromKotlin: String): String {
